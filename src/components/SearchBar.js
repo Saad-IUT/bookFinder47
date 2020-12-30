@@ -1,3 +1,5 @@
+import Sorting from './Sorting'
+
 const SearchBar = props => {
   return (
     <div
@@ -18,15 +20,10 @@ const SearchBar = props => {
           </button>
         </div>
       </form>
-      <button
-        class='ui button primary'
-        style={{ marginLeft: '20px' }}
-        onClick={() => {
-          // props.setOrder('relevance')
-        }}
-      >
-        Sort
-      </button>
+      <Sorting
+        setOrder={props.setOrder}
+        handleSubmitOrder={props.handleSubmitOrder}
+      />
     </div>
   )
 }

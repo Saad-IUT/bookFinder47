@@ -3,7 +3,7 @@ import 'fomantic-ui-css/semantic.css'
 import Header from './components/Header'
 import Pagination from './components/Pagination'
 import SearchBar from './components/SearchBar'
-import { getBooksByTerm } from './booksApi'
+import { getBooksByTerm, getBooksByOrder } from './booksApi'
 import BookList from './components/BookList'
 import { Container } from 'semantic-ui-react'
 
@@ -12,21 +12,19 @@ const App = () => {
   const [books, setBooks] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  // const [order, setOrder] = useState('newest')
+  const [order, setOrder] = useState('relevance')
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-    await getBooksByTerm(
-      searchTerm,
-      setBooks,
-      currentPage,
-      setTotalPages,
-      // order
-    )
+  const handleSubmit = e => {
+    e.preventDefault()
+    getBooksByTerm(searchTerm, setBooks, currentPage, setTotalPages)
   }
 
-  const handleChange = event => {
-    setSearchTerm(event.target.value)
+  const handleSubmitOrder = () => {
+    getBooksByOrder(searchTerm, setBooks, currentPage, setTotalPages, order)
+  }
+
+  const handleChange = e => {
+    setSearchTerm(e.target.value)
   }
 
   // const nextPage = async page_number => {
@@ -41,7 +39,8 @@ const App = () => {
         <SearchBar
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-          // setOrder={setOrder}
+          setOrder={setOrder}
+          handleSubmitOrder={handleSubmitOrder}
         />
         <BookList books={books} />
         <Pagination />
